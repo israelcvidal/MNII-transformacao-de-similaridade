@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class Jacobi {
 	public static ArrayList<ArrayList<Double>>calcular (ArrayList<ArrayList<Double>> A, double tolerancia){
 		ArrayList<ArrayList<Double>> J, Abarra, Jij;
-		
+		Double autovalor = null;
 		J = MatrixOperations.criarIdentidade(A.size());
 		Abarra = A;
 		
@@ -26,15 +26,21 @@ public class Jacobi {
 		MatrixOperations.print(Abarra);
 		System.out.println("\nA matriz de jacobi obtida foi: ");
 		MatrixOperations.print(J);
-	
-		System.out.println("\nOs autovalores e autovetores obtidos foram:\n");
-		ArrayList<Double> autovalores = MatrixOperations.diagonalParaVetor(Abarra);
+		System.out.println();
 		
-		for (int i = 0; i < A.size(); i++) {
-			System.out.println("Autovalor("+ i + ") = " + autovalores.get(i));
-			System.out.println("Autovetor("+ i + ") = " + MatrixOperations.pegarColuna(J, i));
-			System.out.println();
-		}
+		for (int i = 0; i < J.size(); i++) {
+			autovalor = MatrixOperations.conferirSeAutovetor(A, MatrixOperations.pegarColuna(J, i));
+			
+			if (autovalor != null){
+				System.out.println("Autovalor("+ i + ") = " + autovalor);
+				System.out.println("Autovetor("+ i + ") = " + MatrixOperations.pegarColuna(J, i));
+				System.out.println();
+			}
+			else{
+				System.out.println("\nUma das colunas da matriz de Jacobi nao eh autovetor!!!"); 
+				break;
+			}
+		}	
 		return Abarra;
 		
 		
@@ -65,7 +71,7 @@ public class Jacobi {
 		Retorno arquivo = null;
 		
 		try {
-			arquivo = ManipuladorArquivo.leitor("/Users/israelcvidal/Documents/workspace/MNII - transformacao de similaridade/matriz.txt");
+			arquivo = ManipuladorArquivo.leitor("/Users/israelcvidal/Documents/workspace/MNII-transformacao de similaridade/matriz.txt");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

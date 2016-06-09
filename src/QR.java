@@ -3,8 +3,9 @@ import java.util.ArrayList;
 
 public class QR {
 	public static void calcular (ArrayList<ArrayList<Double>> A, double tolerancia){
-		ArrayList<ArrayList<Double>> Q, A1;
+		ArrayList<ArrayList<Double>> Q, A1, Aoriginal = A;
 		RetornoQR QR = null;
+		Double autovalor = null;
 		Q = MatrixOperations.criarIdentidade(A.size());
 		A1 = A;
 		
@@ -14,14 +15,36 @@ public class QR {
 			A1 = MatrixOperations.multiplicarMatrizes(QR.getR(), QR.getQ());
 			A = A1;
 		}
+		System.out.println();
+		System.out.println("A matriz diagonal obtida foi: ");
+		MatrixOperations.print(A);
+		System.out.println("\nA matriz acumulada dos Qs foi:  ");
+		MatrixOperations.print(Q);
+		System.out.println();
 		
-		ArrayList<Double> autovalores = MatrixOperations.diagonalParaVetor(A);
+		for (int i = 0; i < Q.size(); i++) {
+			autovalor = MatrixOperations.conferirSeAutovetor(Aoriginal, MatrixOperations.pegarColuna(Q, i));
+			
+			if (autovalor != null){
+				System.out.println("Autovalor("+ i + ") = " + autovalor);
+				System.out.println("Autovetor("+ i + ") = " + MatrixOperations.pegarColuna(Q, i));
+				System.out.println();
+			}
+			else{
+				System.out.println("\nUma das colunas da matriz de Jacobi nao eh autovetor!!!"); 
+				break;
+			}
+		}	
+		
+		
+		/*ArrayList<Double> autovalores = MatrixOperations.diagonalParaVetor(A);
 		System.out.println();
 		for (int i = 0; i < A.size(); i++) {
 			System.out.println("Autovalor("+ i + ") = " + autovalores.get(i));
 			System.out.println("Autovetor("+ i + ") = " + MatrixOperations.pegarColuna(Q, i));
 			System.out.println();
 		}
+		*/
 		
 	}
 	
@@ -70,7 +93,7 @@ public class QR {
 		Retorno arquivo = null;
 		
 		try {
-			arquivo = ManipuladorArquivo.leitor("/Users/israelcvidal/Documents/workspace/MNII - transformacao de similaridade/matriz.txt");
+			arquivo = ManipuladorArquivo.leitor("/Users/israelcvidal/Documents/workspace/MNII-transformacao de similaridade/matriz.txt");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

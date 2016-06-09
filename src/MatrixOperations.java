@@ -2,6 +2,24 @@ import java.util.ArrayList;
 
 public class MatrixOperations {
 	
+	//conferir se eh autovetor: Se A*v = x*v
+	public static Double conferirSeAutovetor(ArrayList<ArrayList<Double>> A, ArrayList<Double> v ){
+		ArrayList<Double> B = MatrixOperations.matvet(A, v);
+		double proporcao, proporcaoAtual;
+		//conferir a proporcao
+		proporcao = B.get(0)/v.get(0);
+		
+		for (int i = 1; i < B.size(); i++) {
+			proporcaoAtual = (B.get(i)/ v.get(i));
+			
+			if ((proporcao - proporcaoAtual) > 0.1){
+				return null;
+			}				
+		}
+		return proporcao;
+	}
+	
+	
 	//pegar uma coluna de uma matriz e retornar em um vetor.
 	public static ArrayList<Double> pegarColuna(ArrayList<ArrayList<Double>> A, int n){
 		ArrayList<Double> vet = new ArrayList<>();

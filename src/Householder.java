@@ -34,19 +34,6 @@ public class Householder {
 		System.out.println("\nA matriz tridiagonal encontrada foi : " );
 		MatrixOperations.print(Amodificada);
 		
-		
-		Retorno res = PotenciaInversa.resolver(Amodificada, arquivo.getVetor(), arquivo.getTolerancia());
-		
-		//autovalor de A = autovalor de T
-
-		System.out.println("\nO autovalor da matriz usando o metodo da potencia inversa foi:");
-
-		System.out.println(res.getAutovalor().toString());
-		
-		//autovetor de A = H*autovetor de T 		
-		System.out.println("\n O autovetor da matriz usando o matodo da potencia inversa foi:");
-		System.out.println(MatrixOperations.matvet(H, res.getAutovetor()).toString() );
-		
 		return Amodificada; // matriz tridiagonal
 	}
 	
@@ -101,7 +88,7 @@ public class Householder {
 		ArrayList<ArrayList<Double>> A;
 		
 		try {
-			arquivo = ManipuladorArquivo.leitor("/Users/israelcvidal/Documents/workspace/MNII - transformacao de similaridade/matriz.txt");
+			arquivo = ManipuladorArquivo.leitor("/Users/israelcvidal/Documents/workspace/MNII-transformacao de similaridade/matriz.txt");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
